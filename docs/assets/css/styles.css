@@ -1,0 +1,290 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.formWrapper {
+    background-color: #FFFFFF;
+    padding: 32px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    width: 100%;
+    max-width: 420px;
+}
+
+h1 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #1a1a1a;
+    text-align: center;
+    letter-spacing: -0.5px;
+}
+
+p {
+    font-size: 14px;
+    margin-bottom: 28px;
+    color: #666666;
+    text-align: center;
+    font-weight: 400;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 6px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #333333;
+}
+
+select, 
+input[type="date"], 
+input[type="text"], 
+input[type="tel"],
+input[type="password"] {
+    margin-bottom: 18px;
+    padding: 10px 12px;
+    border: 1px solid #d0d0d0;
+    border-radius: 6px;
+    background-color: #FFFFFF;
+    font-size: 14px;
+    color: #1a1a1a;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+select:focus, 
+input[type="date"]:focus, 
+input[type="text"]:focus, 
+input[type="password"]:focus {
+    border-color: #D23A2C;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(210, 58, 44, 0.1);
+}
+
+select:hover, 
+input[type="date"]:hover, 
+input[type="text"]:hover, 
+input[type="password"]:hover {
+    border-color: #b0b0b0;
+}
+
+#courtWrapper {
+    margin-bottom: 0;
+}
+
+#courtWrapper div {
+    display: flex;
+    flex-direction: column;
+}
+
+.userWrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.userWrapper div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex: 1;
+}
+
+.datetimeWrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.datetimeWrapper div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex: 1;
+}
+
+.paymentWrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
+
+.paymentWrapper > label {
+    margin-bottom: 10px;
+}
+
+.paymentOptions {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    align-items: stretch;
+}
+
+.paymentOptions input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.paymentOptions label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 9px 20px;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 14px;
+    color: #666666;
+    background-color: #FFFFFF;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    flex: 1;
+    text-align: center;
+}
+
+.paymentOptions label:hover {
+    border-color: #D23A2C;
+    color: #D23A2C;
+    background-color: rgba(210, 58, 44, 0.02);
+}
+
+.paymentOptions input[type="radio"]:checked + label {
+    background-color: #D23A2C;
+    border-color: #D23A2C;
+    color: #FFFFFF;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(210, 58, 44, 0.25);
+}
+
+.paymentOptions input[type="radio"]:focus + label {
+    box-shadow: 0 0 0 3px rgba(210, 58, 44, 0.15);
+}
+
+.buttonWrapper {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+button {
+    padding: 11px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #FFFFFF;
+    transition: all 0.2s ease;
+    flex: 1;
+}
+
+#aceptBtn {
+    background-color: #D23A2C;
+}
+
+#aceptBtn:hover {
+    background-color: #b8311e;
+    transform: translateY(-1px);
+}
+
+#aceptBtn:active {
+    transform: translateY(0);
+}
+
+#cancelBtn {
+    background-color: #757575;
+}
+
+#cancelBtn:hover {
+    background-color: #616161;
+    transform: translateY(-1px);
+}
+
+#cancelBtn:active {
+    transform: translateY(0);
+}
+
+.switchWrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.switchWrapper label:first-child {
+    margin-right: 16px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 24px;
+}
+
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #d0d0d0;
+    transition: 0.3s ease;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: #FFFFFF;
+    transition: 0.3s ease;
+}
+
+input:checked + .slider {
+    background-color: #D23A2C;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 0 3px rgba(210, 58, 44, 0.2);
+}
+
+input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+.slider.round {
+    border-radius: 24px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
