@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "msedge",
+      "type": "chrome",
       "request": "launch",
       "name": "Abrir Chrome",
       "url": "http://127.0.0.1:5500/docs",

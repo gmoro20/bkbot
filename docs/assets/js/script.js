@@ -6,16 +6,24 @@ function resetForm() {
 // Define la función send
 function send() {
     console.log("Aceptado")
+
+    const installationSelect = document.getElementById('installation');
+    const sportSelect = document.getElementById('sport');
+    const courtSelect = document.getElementById('court');
+
     const formData = {
-        "instalacion": document.getElementById('installation').value,
-        "deporte": document.getElementById('sport').value,
-        "campo": document.getElementById('court').value,
-        "fecha": document.getElementById("date").value,
-        "hora": document.getElementById("hour").value,
-        "usuario": document.getElementById("user").value,
-        "contraseña": document.getElementById("password").value,
-        "payMethod": "bizum",
-		"phoneNumber": document.getElementById('phoneNumber').value
+        "installation": installationSelect.value,
+        "installation_name": installationSelect.options[installationSelect.selectedIndex]?.text || "",
+        "sport": sportSelect.value,
+        "sport_name": sportSelect.options[sportSelect.selectedIndex]?.text || "",
+        "court": courtSelect.value,
+        "court_name": courtSelect.options[courtSelect.selectedIndex]?.text || "",
+        "date": document.getElementById("date").value,
+        "hour": document.getElementById("hour").value,
+        "user": document.getElementById("user").value,
+        "password": document.getElementById("password").value,
+        "pay_method": "bizum",
+        "phone_number": document.getElementById('phoneNumber').value
     }
 
     completed = true
@@ -29,7 +37,14 @@ function send() {
         alert("Por favor, completa todos los campos.");
     }
 
-    const datetime = new Date(`${formData["fecha"]}T${formData["hora"]}`);
+    // Validación del teléfono
+    const phoneDigits = formData["phone_number"].replace(/\s/g, '');
+    if (completed && (!/^\d{9}$/.test(phoneDigits) || !/^[6-9]/.test(phoneDigits))) {
+        alert("El número de teléfono no es válido");
+        completed = false;
+    }
+
+    const datetime = new Date(`${formData["date"]}T${formData["hour"]}`);
     if (datetime.setDate(datetime.getDate() - 2) < new Date() && completed) {
         if (datetime.setDate(datetime.getDate() + 2) < new Date()) {
             alert('Ya se ha pasado la hora de esta reserva.')
@@ -41,16 +56,19 @@ function send() {
 
     if (completed) {
         const dDAT = {
-            "datetime": `${formData["fecha"]}T${formData["hora"]}`,
-            "installation": formData["instalacion"],
-        	"sport": formData["deporte"],
-            "court": formData["campo"],
-            "user": formData["usuario"],
-            "password": formData["contraseña"],
-            "payMethod": formData["payMethod"],
-			"phoneNumber": formData["phoneNumber"]
+            "datetime": `${formData["date"]}T${formData["hour"]}`,
+            "installation": parseInt(formData["installation"]),
+            "installation_name": formData["installation_name"],
+            "sport": parseInt(formData["sport"]),
+            "sport_name": formData["sport_name"],
+            "court": parseInt(formData["court"]),
+            "court_name": formData["court_name"],
+            "user": formData["user"],
+            "password": formData["password"],
+            "pay_method": formData["pay_method"],
+            "phone_number": parseInt(formData["phone_number"])
         };
-		console.log(dDAT)
+        console.log(dDAT)
         Telegram.WebApp.sendData(JSON.stringify(dDAT));
     };
 };
@@ -112,7 +130,7 @@ function updateCourts() {
 function updateSports() {
     const installationSelect = document.getElementById('installation');
     const sportSelect = document.getElementById('sport');
-    const sportWrapper = document.getElementById('sportWrapper'); // Asegúrate de tener este wrapper en el HTML
+    const sportWrapper = document.getElementById('sportWrapper');
 
     const codigoComplejo = installationSelect.value;
 
@@ -135,7 +153,7 @@ function updateSports() {
             if (deportes.length === 0) {
                 // Sin deportes para esta instalación
                 if (sportWrapper) sportWrapper.style.display = 'none';
-                updateCourts(); // Limpiará los campos también
+                updateCourts();
                 return;
             }
 
@@ -147,7 +165,7 @@ function updateSports() {
                 sportSelect.appendChild(option);
             });
 
-            // Mostrar solo si hay más de uno (si hay uno solo, está fijo pero no hace falta selector)
+            // Mostrar solo si hay más de uno
             if (sportWrapper) sportWrapper.style.display = deportes.length > 1 ? 'block' : 'none';
 
             // Seleccionar el primero por defecto y actualizar campos
