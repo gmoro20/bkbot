@@ -289,3 +289,20 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
+
+@media (max-width: 480px) {
+    .datetimeWrapper {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .datetimeWrapper div {
+        width: 100%;
+    }
+
+    input[type="date"] {
+        -webkit-appearance: none;
+        appearance: none;
+        min-height: 42px;
+    }
+}

@@ -10,14 +10,18 @@ function send() {
     const installationSelect = document.getElementById('installation');
     const sportSelect = document.getElementById('sport');
     const courtSelect = document.getElementById('court');
+    const courtWrapper = document.getElementById('courtWrapper');
+
+    // ¿Se muestra el selector de campo?
+    const courtVisible = courtWrapper && courtWrapper.style.display !== 'none';
 
     const formData = {
         "installation": installationSelect.value,
         "installation_name": installationSelect.options[installationSelect.selectedIndex]?.text || "",
         "sport": sportSelect.value,
         "sport_name": sportSelect.options[sportSelect.selectedIndex]?.text || "",
-        "court": courtSelect.value,
-        "court_name": courtSelect.options[courtSelect.selectedIndex]?.text || "",
+        "court": courtVisible ? courtSelect.value : "0",
+        "court_name": courtVisible ? (courtSelect.options[courtSelect.selectedIndex]?.text || "") : "",
         "date": document.getElementById("date").value,
         "hour": document.getElementById("hour").value,
         "user": document.getElementById("user").value,
@@ -26,51 +30,60 @@ function send() {
         "phone_number": document.getElementById('phoneNumber').value
     }
 
-    completed = true
-    for (var key in formData) {
-        if (formData.hasOwnProperty(key) && formData[key] === "") {
+    // Campos obligatorios (court se excluye si no es visible)
+    const requiredFields = ["installation", "sport", "date", "hour", "user", "password", "phone_number"];
+    if (courtVisible) requiredFields.push("court");
+
+    let completed = true;
+    for (const key of requiredFields) {
+        if (!formData[key] || formData[key].trim() === "") {
             console.log("El campo '" + key + "' está vacío.");
             completed = false;
         }
     }
     if (!completed) {
         alert("Por favor, completa todos los campos.");
+        return;
     }
 
     // Validación del teléfono
     const phoneDigits = formData["phone_number"].replace(/\s/g, '');
-    if (completed && (!/^\d{9}$/.test(phoneDigits) || !/^[6-9]/.test(phoneDigits))) {
+    if (!/^\d{9}$/.test(phoneDigits) || !/^[6-9]/.test(phoneDigits)) {
         alert("El número de teléfono no es válido");
-        completed = false;
+        return;
     }
 
+    // Validación de fecha
+    const now = new Date();
     const datetime = new Date(`${formData["date"]}T${formData["hour"]}`);
-    if (datetime.setDate(datetime.getDate() - 2) < new Date() && completed) {
-        if (datetime.setDate(datetime.getDate() + 2) < new Date()) {
-            alert('Ya se ha pasado la hora de esta reserva.')
-        } else {
-            alert('Esta reserva ya se puede hacer desde la pagina si sigue libre.')
-        }
-        completed = false
+    const twoDaysBefore = new Date(datetime);
+    twoDaysBefore.setDate(twoDaysBefore.getDate() - 2);
+
+    if (datetime < now) {
+        alert('Ya se ha pasado la hora de esta reserva.');
+        return;
+    }
+    if (twoDaysBefore < now) {
+        alert('Esta reserva ya se puede hacer desde la página si sigue libre.');
+        return;
     }
 
-    if (completed) {
-        const dDAT = {
-            "datetime": `${formData["date"]}T${formData["hour"]}`,
-            "installation": parseInt(formData["installation"]),
-            "installation_name": formData["installation_name"],
-            "sport": parseInt(formData["sport"]),
-            "sport_name": formData["sport_name"],
-            "court": parseInt(formData["court"]),
-            "court_name": formData["court_name"],
-            "user": formData["user"],
-            "password": formData["password"],
-            "pay_method": formData["pay_method"],
-            "phone_number": parseInt(formData["phone_number"])
-        };
-        console.log(dDAT)
-        Telegram.WebApp.sendData(JSON.stringify(dDAT));
+    const dDAT = {
+        "datetime": `${formData["date"]}T${formData["hour"]}`,
+        "installation": parseInt(formData["installation"]),
+        "installation_name": formData["installation_name"],
+        "sport": parseInt(formData["sport"]),
+        "sport_name": formData["sport_name"],
+        "court": parseInt(formData["court"]),
+        "court_name": formData["court_name"],
+        "user": formData["user"],
+        "password": formData["password"],
+        "pay_method": formData["pay_method"],
+        "phone_number": parseInt(phoneDigits)
     };
+
+    console.log(dDAT);
+    Telegram.WebApp.sendData(JSON.stringify(dDAT));
 };
 
 function updateCourts() {
@@ -82,7 +95,6 @@ function updateCourts() {
     const codigoComplejo = installationSelect.value;
     const codigoActividad = sportSelect.value;
 
-    // Si no hay instalación o deporte seleccionado, limpiar y ocultar
     if (!codigoComplejo || codigoComplejo.trim() === "" ||
         !codigoActividad || codigoActividad.trim() === "") {
         courtSelect.innerHTML = '';
@@ -105,7 +117,6 @@ function updateCourts() {
             courtSelect.innerHTML = '';
 
             if (courts.length === 0) {
-                // Sin pistas disponibles
                 courtWrapper.style.display = 'none';
                 return;
             }
@@ -117,7 +128,6 @@ function updateCourts() {
                 courtSelect.appendChild(option);
             });
 
-            // Solo mostrar el selector si hay más de una opción
             courtWrapper.style.display = courts.length > 1 ? 'block' : 'none';
         })
         .catch(error => {
@@ -134,7 +144,6 @@ function updateSports() {
 
     const codigoComplejo = installationSelect.value;
 
-    // Si no hay instalación seleccionada, limpiar todo
     if (!codigoComplejo || codigoComplejo.trim() === "") {
         sportSelect.innerHTML = '';
         if (sportWrapper) sportWrapper.style.display = 'none';
@@ -147,17 +156,14 @@ function updateSports() {
         .then(data => {
             sportSelect.innerHTML = '';
 
-            // Filtrar solo actividades de tipo reserva
             const deportes = (Array.isArray(data) ? data : (data ? [data] : [])).filter(actividad => actividad.tipoReserva === "R");
 
             if (deportes.length === 0) {
-                // Sin deportes para esta instalación
                 if (sportWrapper) sportWrapper.style.display = 'none';
                 updateCourts();
                 return;
             }
 
-            // Poblar el selector de deportes
             deportes.forEach(actividad => {
                 const option = document.createElement('option');
                 option.value = actividad.codigoActividad;
@@ -165,10 +171,8 @@ function updateSports() {
                 sportSelect.appendChild(option);
             });
 
-            // Mostrar solo si hay más de uno
             if (sportWrapper) sportWrapper.style.display = deportes.length > 1 ? 'block' : 'none';
 
-            // Seleccionar el primero por defecto y actualizar campos
             sportSelect.selectedIndex = 0;
             updateCourts();
         })
@@ -184,7 +188,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const installationSelect = document.getElementById('installation');
     const sportSelect = document.getElementById('sport');
 
-    // Cargar instalaciones desde la API
     fetch('https://cms.bilbaokirolak.eus/api/ados/anon-get-listado-complejos-reserva')
         .then(response => response.json())
         .then(data => {
@@ -195,17 +198,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 installationSelect.appendChild(option);
             });
 
-            // Inicializar deportes y campos con la primera instalación
             updateSports();
         })
         .catch(error => {
             console.error('Error al cargar las instalaciones:', error);
         });
 
-    // Cambio de instalación → actualizar deportes (y campos en cascada)
     installationSelect.addEventListener('change', () => { updateSports(); });
-
-    // Cambio de deporte → actualizar solo campos
     sportSelect.addEventListener('change', () => { updateCourts(); });
 });
 
