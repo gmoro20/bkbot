@@ -1,3 +1,7 @@
+// Inicializa la aplicación web de Telegram
+const tg = window.Telegram.WebApp;
+tg.ready();
+
 // Define la función reset
 function resetForm() {
     document.getElementById('formWrapper').reset();
@@ -83,7 +87,8 @@ function send() {
     };
 
     console.log(dDAT);
-    Telegram.WebApp.sendData(JSON.stringify(dDAT));
+    tg.sendData(JSON.stringify(dDAT));
+    tg.close();
 };
 
 function updateCourts() {
