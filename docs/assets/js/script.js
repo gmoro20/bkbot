@@ -21,11 +21,11 @@ function send() {
 
     const formData = {
         "installation": installationSelect.value,
-        "installation_name": installationSelect.options[installationSelect.selectedIndex]?.text || "",
+        "installation_name": installationSelect.options[installationSelect.selectedIndex]?.text,
         "sport": sportSelect.value,
-        "sport_name": sportSelect.options[sportSelect.selectedIndex]?.text || "",
-        "court": courtVisible ? courtSelect.value : "0",
-        "court_name": courtVisible ? (courtSelect.options[courtSelect.selectedIndex]?.text || "") : "",
+        "sport_name": sportSelect.options[sportSelect.selectedIndex]?.text,
+        "court": courtSelect.value,
+        "court_name": courtSelect.options[courtSelect.selectedIndex]?.text,
         "date": document.getElementById("date").value,
         "hour": document.getElementById("hour").value,
         "user": document.getElementById("user").value,
