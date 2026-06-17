@@ -3,7 +3,7 @@ import json
 from datetime import date
 
 BASE_URL = "https://cms.bilbaokirolak.eus/api/ados"
-VERIFY = False
+VERIFY = True
 
 # Fecha de hoy en el formato que espera la API: DD%2FMM%2FYYYY
 today = date.today()
