@@ -2,9 +2,6 @@
 const tg = window.Telegram.WebApp;
 tg.ready();
 
-// Datos cargados desde el JSON estático
-let kirolakData = [];
-
 // Define la función reset
 function resetForm() {
     document.getElementById('formWrapper').reset();
@@ -94,112 +91,122 @@ function send() {
     tg.close();
 };
 
-// ----------- Funciones que ahora leen del JSON local -----------
-
 function updateCourts() {
     const installationSelect = document.getElementById('installation');
     const sportSelect = document.getElementById('sport');
     const courtSelect = document.getElementById('court');
     const courtWrapper = document.getElementById('courtWrapper');
 
-    const codigoComplejo = parseInt(installationSelect.value);
-    const codigoActividad = parseInt(sportSelect.value);
+    const codigoComplejo = installationSelect.value;
+    const codigoActividad = sportSelect.value;
 
-    courtSelect.innerHTML = '';
-
-    if (!installationSelect.value || !sportSelect.value) {
+    if (!codigoComplejo || codigoComplejo.trim() === "" ||
+        !codigoActividad || codigoActividad.trim() === "") {
+        courtSelect.innerHTML = '';
         courtWrapper.style.display = 'none';
         return;
     }
 
-    // Busca la instalación y el deporte en los datos ya cargados
-    const instalacion = kirolakData.find(i => i.value === codigoComplejo);
-    if (!instalacion) {
-        courtWrapper.style.display = 'none';
-        return;
-    }
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const fechaReserva = `${day}%2F${month}%2F${today.getFullYear()}`;
 
-    const deporte = instalacion.sports.find(s => s.value === codigoActividad);
-    if (!deporte) {
-        courtWrapper.style.display = 'none';
-        return;
-    }
+    fetch(`https://cms.bilbaokirolak.eus/api/ados/anon-get-listado-instalaciones-reserva?codigoComplejo=${codigoComplejo}&codigoActividad=${codigoActividad}&fechaReserva=${fechaReserva}`)
+        .then(response => response.json())
+        .then(data => {
+            const courts = Array.isArray(data.instalaciones)
+                ? data.instalaciones
+                : (data.instalaciones ? [data.instalaciones] : []);
 
-    const courts = deporte.courts || [];
+            courtSelect.innerHTML = '';
 
-    if (courts.length === 0) {
-        courtWrapper.style.display = 'none';
-        return;
-    }
+            if (courts.length === 0) {
+                courtWrapper.style.display = 'none';
+                return;
+            }
 
-    courts.forEach(court => {
-        const option = document.createElement('option');
-        option.value = court.value;
-        option.textContent = court.label;
-        courtSelect.appendChild(option);
-    });
+            courts.forEach(court => {
+                const option = document.createElement('option');
+                option.value = parseInt(court.codigoInstalacion.slice(-4));
+                option.textContent = court.nombreInstalacion;
+                courtSelect.appendChild(option);
+            });
 
-    courtWrapper.style.display = courts.length > 1 ? 'block' : 'none';
-}
+            courtWrapper.style.display = courts.length > 1 ? 'block' : 'none';
+        })
+        .catch(error => {
+            console.error('Error al cargar las pistas:', error);
+            courtSelect.innerHTML = '';
+            courtWrapper.style.display = 'none';
+        });
+};
 
 function updateSports() {
     const installationSelect = document.getElementById('installation');
     const sportSelect = document.getElementById('sport');
     const sportWrapper = document.getElementById('sportWrapper');
 
-    const codigoComplejo = parseInt(installationSelect.value);
+    const codigoComplejo = installationSelect.value;
 
-    sportSelect.innerHTML = '';
-
-    if (!installationSelect.value) {
+    if (!codigoComplejo || codigoComplejo.trim() === "") {
+        sportSelect.innerHTML = '';
         if (sportWrapper) sportWrapper.style.display = 'none';
         updateCourts();
         return;
     }
 
-    // Busca la instalación en los datos ya cargados
-    const instalacion = kirolakData.find(i => i.value === codigoComplejo);
-    if (!instalacion || !instalacion.sports || instalacion.sports.length === 0) {
-        if (sportWrapper) sportWrapper.style.display = 'none';
-        updateCourts();
-        return;
-    }
+    fetch(`https://cms.bilbaokirolak.eus/api/ados/anon-get-listado-actividades-reserva?codigoComplejo=${codigoComplejo}`)
+        .then(response => response.json())
+        .then(data => {
+            sportSelect.innerHTML = '';
 
-    instalacion.sports.forEach(deporte => {
-        const option = document.createElement('option');
-        option.value = deporte.value;
-        option.textContent = deporte.label;
-        sportSelect.appendChild(option);
-    });
+            const deportes = (Array.isArray(data) ? data : (data ? [data] : [])).filter(actividad => actividad.tipoReserva === "R");
 
-    if (sportWrapper) sportWrapper.style.display = instalacion.sports.length > 1 ? 'block' : 'none';
+            if (deportes.length === 0) {
+                if (sportWrapper) sportWrapper.style.display = 'none';
+                updateCourts();
+                return;
+            }
 
-    sportSelect.selectedIndex = 0;
-    updateCourts();
-}
+            deportes.forEach(actividad => {
+                const option = document.createElement('option');
+                option.value = actividad.codigoActividad;
+                option.textContent = actividad.nombreActividad;
+                sportSelect.appendChild(option);
+            });
 
-// ----------- Carga inicial del JSON -----------
+            if (sportWrapper) sportWrapper.style.display = deportes.length > 1 ? 'block' : 'none';
+
+            sportSelect.selectedIndex = 0;
+            updateCourts();
+        })
+        .catch(error => {
+            console.error('Error al cargar las actividades:', error);
+            sportSelect.innerHTML = '';
+            if (sportWrapper) sportWrapper.style.display = 'none';
+            updateCourts();
+        });
+};
 
 document.addEventListener('DOMContentLoaded', function () {
     const installationSelect = document.getElementById('installation');
     const sportSelect = document.getElementById('sport');
 
-    fetch('static/data.json')
+    fetch('https://cms.bilbaokirolak.eus/api/ados/anon-get-listado-complejos-reserva')
         .then(response => response.json())
         .then(data => {
-            kirolakData = data;
-
             data.forEach(installation => {
                 const option = document.createElement('option');
-                option.value = installation.value;
-                option.textContent = installation.label;
+                option.value = installation.codigoComplejo;
+                option.textContent = installation.nombreComplejo;
                 installationSelect.appendChild(option);
             });
 
             updateSports();
         })
         .catch(error => {
-            console.error('Error al cargar los datos:', error);
+            console.error('Error al cargar las instalaciones:', error);
         });
 
     installationSelect.addEventListener('change', () => { updateSports(); });
