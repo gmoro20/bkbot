@@ -445,17 +445,112 @@
       {
         "value": 8,
         "label": "SQUASH",
-        "courts": []
+        "courts": [
+          {
+            "value": 1,
+            "label": "SQUASH 01"
+          },
+          {
+            "value": 2,
+            "label": "SQUASH 02"
+          }
+        ]
       },
       {
         "value": 9,
         "label": "TENIS CUBIERTO",
-        "courts": []
+        "courts": [
+          {
+            "value": 1,
+            "label": "TENIS CUBIERTO 01"
+          },
+          {
+            "value": 2,
+            "label": "TENIS CUBIERTO 02"
+          }
+        ]
       },
       {
         "value": 10,
         "label": "TENIS DESCUBIERTO",
-        "courts": []
+        "courts": [
+          {
+            "value": 1,
+            "label": "TENIS DESCUBIERTO 03"
+          },
+          {
+            "value": 2,
+            "label": "TENIS DESCUBIERTO 04"
+          },
+          {
+            "value": 3,
+            "label": "TENIS DESCUBIERTO 05"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "value": 8,
+    "label": "ZORROZA",
+    "sports": [
+      {
+        "value": 2,
+        "label": "FUTBOL 11",
+        "courts": [
+          {
+            "value": 1,
+            "label": "CAMPO FUTBOL 11 A"
+          }
+        ]
+      },
+      {
+        "value": 11,
+        "label": "FUTBOL 7",
+        "courts": [
+          {
+            "value": 2,
+            "label": "CAMPO FUTBOL 7 A (1/2)"
+          },
+          {
+            "value": 3,
+            "label": "CAMPO FUTBOL 7 B (2/2)"
+          }
+        ]
+      },
+      {
+        "value": 4,
+        "label": "PABELLON",
+        "courts": [
+          {
+            "value": 1,
+            "label": "PABELLON 01"
+          }
+        ]
+      },
+      {
+        "value": 5,
+        "label": "PADEL CUBIERTO",
+        "courts": [
+          {
+            "value": 1,
+            "label": "PADEL CUBIERTO 01"
+          },
+          {
+            "value": 2,
+            "label": "PADEL CUBIERTO 02"
+          }
+        ]
+      },
+      {
+        "value": 10,
+        "label": "TENIS DESCUBIERTO",
+        "courts": [
+          {
+            "value": 1,
+            "label": "TENIS DESCUBIERTO QUICK 01"
+          }
+        ]
       }
     ]
   }

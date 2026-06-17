@@ -124,7 +124,7 @@ if __name__ == "__main__":
     print("=== Generando datos de Bilbao Kirolak ===")
     result = build_data()
 
-    output_path = "doc/static/data.json"
+    output_path = "docs/static/data.json"
     import os
     os.makedirs("static", exist_ok=True)
 
