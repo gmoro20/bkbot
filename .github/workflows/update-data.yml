@@ -23,7 +23,7 @@ jobs:
         run: pip install requests
 
       - name: Ejecutar script de actualización
-        run: python docs/get_bk_data.py
+        run: python get_bk_data.py
 
       - name: Commit y push si hay cambios
         run: |
