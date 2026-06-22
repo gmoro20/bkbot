@@ -119,32 +119,17 @@
       {
         "value": 7,
         "label": "CAMPO DE FUTBOL 5 HIERBA ARTIFICIAL",
-        "courts": [
-          {
-            "value": 1,
-            "label": "CAMPO FUTBOL 5 HIERBA ARTIFIC."
-          }
-        ]
+        "courts": []
       },
       {
         "value": 4,
         "label": "PABELLON",
-        "courts": [
-          {
-            "value": 4,
-            "label": "PABELLON 01"
-          }
-        ]
+        "courts": []
       },
       {
         "value": 8,
         "label": "SQUASH",
-        "courts": [
-          {
-            "value": 1,
-            "label": "SQUASH 01"
-          }
-        ]
+        "courts": []
       }
     ]
   },
