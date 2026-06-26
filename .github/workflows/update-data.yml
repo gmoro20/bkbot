@@ -3,7 +3,7 @@ name: Actualizar datos de Bilbao Kirolak
 on:
   schedule:
     # Se ejecuta todos los lunes a las 4:00 AM (hora UTC)
-    - cron: '0 4 * * 1'
+    - cron: '0 4 * * *'
   workflow_dispatch: # Permite ejecutarlo manualmente desde GitHub
 
 jobs:
