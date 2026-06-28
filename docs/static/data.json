@@ -525,7 +525,12 @@
       {
         "value": 10,
         "label": "TENIS DESCUBIERTO",
-        "courts": []
+        "courts": [
+          {
+            "value": 1,
+            "label": "TENIS DESCUBIERTO QUICK 01"
+          }
+        ]
       }
     ]
   }
