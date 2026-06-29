@@ -50,11 +50,6 @@
         ]
       },
       {
-        "value": 4,
-        "label": "PABELLON",
-        "courts": []
-      },
-      {
         "value": 5,
         "label": "PADEL CUBIERTO",
         "courts": [
@@ -109,38 +104,6 @@
             "label": "TENIS DESCUB. HIERBA ARTIF. 01"
           }
         ]
-      }
-    ]
-  },
-  {
-    "value": 4,
-    "label": "DEUSTO",
-    "sports": [
-      {
-        "value": 7,
-        "label": "CAMPO DE FUTBOL 5 HIERBA ARTIFICIAL",
-        "courts": []
-      },
-      {
-        "value": 4,
-        "label": "PABELLON",
-        "courts": []
-      },
-      {
-        "value": 8,
-        "label": "SQUASH",
-        "courts": []
-      }
-    ]
-  },
-  {
-    "value": 3,
-    "label": "LA CASILLA",
-    "sports": [
-      {
-        "value": 4,
-        "label": "PABELLON",
-        "courts": []
       }
     ]
   },
@@ -253,11 +216,6 @@
             "label": "FRONTON 01"
           }
         ]
-      },
-      {
-        "value": 2,
-        "label": "FUTBOL 11",
-        "courts": []
       },
       {
         "value": 11,
@@ -482,7 +440,12 @@
       {
         "value": 2,
         "label": "FUTBOL 11",
-        "courts": []
+        "courts": [
+          {
+            "value": 1,
+            "label": "CAMPO FUTBOL 11 A"
+          }
+        ]
       },
       {
         "value": 11,
