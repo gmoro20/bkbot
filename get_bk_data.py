@@ -103,12 +103,13 @@ def build_data():
                 campos = []
 
             print(f"  → {len(campos)} campo(s) encontrado(s)")
-
-            deportes.append({
-                "value": int(codigo_actividad) if str(codigo_actividad).isdigit() else codigo_actividad,
-                "label": nombre_actividad,
-                "courts": campos
-            })
+            
+            if len(campos) > 0:
+                deportes.append({
+                    "value": int(codigo_actividad) if str(codigo_actividad).isdigit() else codigo_actividad,
+                    "label": nombre_actividad,
+                    "courts": campos
+                })
 
         if len(deportes) > 0:
             data.append({
