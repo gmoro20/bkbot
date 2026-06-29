@@ -482,12 +482,7 @@
       {
         "value": 2,
         "label": "FUTBOL 11",
-        "courts": [
-          {
-            "value": 1,
-            "label": "CAMPO FUTBOL 11 A"
-          }
-        ]
+        "courts": []
       },
       {
         "value": 11,
