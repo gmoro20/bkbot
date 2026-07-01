@@ -1,31 +1,5 @@
 [
   {
-    "value": 10,
-    "label": "ABUSU-LA PEÑA",
-    "sports": [
-      {
-        "value": 3,
-        "label": "FRONTON",
-        "courts": [
-          {
-            "value": 1,
-            "label": "FRONTON 01"
-          }
-        ]
-      },
-      {
-        "value": 4,
-        "label": "PABELLON",
-        "courts": [
-          {
-            "value": 1,
-            "label": "PABELLON 01"
-          }
-        ]
-      }
-    ]
-  },
-  {
     "value": 2,
     "label": "ARTXANDA",
     "sports": [
