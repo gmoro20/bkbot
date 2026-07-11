@@ -448,16 +448,6 @@
             "label": "PADEL CUBIERTO 02"
           }
         ]
-      },
-      {
-        "value": 10,
-        "label": "TENIS DESCUBIERTO",
-        "courts": [
-          {
-            "value": 1,
-            "label": "TENIS DESCUBIERTO QUICK 01"
-          }
-        ]
       }
     ]
   }
