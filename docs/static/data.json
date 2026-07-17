@@ -156,6 +156,16 @@
         ]
       },
       {
+        "value": 9,
+        "label": "TENIS CUBIERTO",
+        "courts": [
+          {
+            "value": 1,
+            "label": "TENIS CUBIERTO"
+          }
+        ]
+      },
+      {
         "value": 10,
         "label": "TENIS DESCUBIERTO",
         "courts": [
