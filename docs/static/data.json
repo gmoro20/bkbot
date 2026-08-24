@@ -1,5 +1,31 @@
 [
   {
+    "value": 10,
+    "label": "ABUSU-LA PEÑA",
+    "sports": [
+      {
+        "value": 3,
+        "label": "FRONTON",
+        "courts": [
+          {
+            "value": 1,
+            "label": "FRONTON 01"
+          }
+        ]
+      },
+      {
+        "value": 4,
+        "label": "PABELLON",
+        "courts": [
+          {
+            "value": 1,
+            "label": "PABELLON 01"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "value": 2,
     "label": "ARTXANDA",
     "sports": [
@@ -466,6 +492,16 @@
           {
             "value": 2,
             "label": "PADEL CUBIERTO 02"
+          }
+        ]
+      },
+      {
+        "value": 10,
+        "label": "TENIS DESCUBIERTO",
+        "courts": [
+          {
+            "value": 1,
+            "label": "TENIS DESCUBIERTO QUICK 01"
           }
         ]
       }
