@@ -64,30 +64,29 @@ function send() {
     }
 
     // Validación de fecha
-    const testMode = OWNER_MODE && document.getElementById('testMode').checked;
     const now = new Date();
 	const datetime = new Date(`${formData["date"]}T${formData["hour"]}`);
+	const twoDaysBefore = new Date(datetime);
+	twoDaysBefore.setDate(twoDaysBefore.getDate() - 2);
+	const threeMinutesBefore = new Date(twoDaysBefore.getTime() - 4 * 60 * 1000);
 
 	if (datetime < now) {
 		alert('Ya se ha pasado la hora de esta reserva.');
 		return;
 	}
 
-	if (!testMode) {
-		const twoDaysBefore = new Date(datetime);
-		twoDaysBefore.setDate(twoDaysBefore.getDate() - 2);
-		const threeMinutesBefore = new Date(twoDaysBefore.getTime() - 4 * 60 * 1000);
-
-		if (twoDaysBefore < now) {
-			alert('Esta reserva ya se puede hacer desde la página si sigue libre.');
-			return;
-		}
-
-		if (threeMinutesBefore < now) {
-			alert('Ya es demasiado tarde para reservar por bot. Tendras que reservar a mano por la app.');
-			return;
-		}
+	// En modo owner estas dos restricciones no dan error: solo activan test_mode
+	if (twoDaysBefore < now && !OWNER_MODE) {
+		alert('Esta reserva ya se puede hacer desde la página si sigue libre.');
+		return;
 	}
+
+	if (threeMinutesBefore < now && !OWNER_MODE) {
+		alert('Ya es demasiado tarde para reservar por bot. Tendras que reservar a mano por la app.');
+		return;
+	}
+
+	const testMode = OWNER_MODE && threeMinutesBefore < now;
 	
     const dDAT = {
         "datetime": `${formData["date"]}T${formData["hour"]}`,
