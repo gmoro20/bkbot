@@ -92,6 +92,19 @@
                 <input type="tel" id="phoneNumber" placeholder="666 666 666" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" maxlength="9" required>
             </div>
 
+            <div id="ownerWrapper" style="display:none;">
+                <label for="targetChatId">Chat ID destino (vacío = para mí):</label>
+                <input type="text" inputmode="numeric" id="targetChatId" placeholder="123456789">
+
+                <div class="switchWrapper">
+                    <label for="testMode">Modo test (sin restricciones de fecha):</label>
+                    <label class="switch">
+                        <input type="checkbox" id="testMode">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+
             <div class="buttonWrapper">
                 <button type="button" id="aceptBtn" onclick="send()">Aceptar</button>
                 <button type="button" id="cancelBtn" onclick="resetForm()">Cancelar</button>

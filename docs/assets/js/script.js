@@ -2,6 +2,9 @@
 const tg = window.Telegram.WebApp;
 tg.ready();
 
+// Modo owner: solo cambia lo que se muestra; el bot valida igualmente que sea owner
+const OWNER_MODE = new URLSearchParams(window.location.search).get('mode') === 'owner';
+
 // Datos cargados desde el JSON estático
 let kirolakData = [];
 
@@ -61,25 +64,29 @@ function send() {
     }
 
     // Validación de fecha
+    const testMode = OWNER_MODE && document.getElementById('testMode').checked;
     const now = new Date();
 	const datetime = new Date(`${formData["date"]}T${formData["hour"]}`);
-	const twoDaysBefore = new Date(datetime);
-	twoDaysBefore.setDate(twoDaysBefore.getDate() - 2);
-	const threeMinutesBefore = new Date(twoDaysBefore.getTime() - 4 * 60 * 1000);
 
 	if (datetime < now) {
 		alert('Ya se ha pasado la hora de esta reserva.');
 		return;
 	}
 
-	if (twoDaysBefore < now) {
-		alert('Esta reserva ya se puede hacer desde la página si sigue libre.');
-		return;
-	}
+	if (!testMode) {
+		const twoDaysBefore = new Date(datetime);
+		twoDaysBefore.setDate(twoDaysBefore.getDate() - 2);
+		const threeMinutesBefore = new Date(twoDaysBefore.getTime() - 4 * 60 * 1000);
 
-	if (threeMinutesBefore < now) {
-		alert('Ya es demasiado tarde para reservar por bot. Tendras que reservar a mano por la app.');
-		return;
+		if (twoDaysBefore < now) {
+			alert('Esta reserva ya se puede hacer desde la página si sigue libre.');
+			return;
+		}
+
+		if (threeMinutesBefore < now) {
+			alert('Ya es demasiado tarde para reservar por bot. Tendras que reservar a mano por la app.');
+			return;
+		}
 	}
 	
     const dDAT = {
@@ -95,6 +102,13 @@ function send() {
         "pay_method": formData["pay_method"],
         "phone_number": parseInt(phoneDigits)
     };
+
+    if (OWNER_MODE) {
+        dDAT.owner = {
+            target_chat_id: document.getElementById('targetChatId').value.trim(),
+            test_mode: testMode
+        };
+    }
 
     console.log(dDAT);
     tg.sendData(JSON.stringify(dDAT));
@@ -188,6 +202,8 @@ function updateSports() {
 // ----------- Carga inicial del JSON -----------
 
 document.addEventListener('DOMContentLoaded', function () {
+    if (OWNER_MODE) document.getElementById('ownerWrapper').style.display = 'block';
+
     const installationSelect = document.getElementById('installation');
     const sportSelect = document.getElementById('sport');
 
