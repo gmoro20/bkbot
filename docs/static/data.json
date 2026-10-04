@@ -40,16 +40,6 @@
         ]
       },
       {
-        "value": 3,
-        "label": "FRONTON",
-        "courts": [
-          {
-            "value": 1,
-            "label": "FRONTON 01"
-          }
-        ]
-      },
-      {
         "value": 5,
         "label": "PADEL CUBIERTO",
         "courts": [
@@ -82,16 +72,6 @@
           {
             "value": 2,
             "label": "PADEL DESCUBIERTO 06"
-          }
-        ]
-      },
-      {
-        "value": 29,
-        "label": "PICKLEBALL",
-        "courts": [
-          {
-            "value": 1,
-            "label": "PICKLEBALL 01"
           }
         ]
       },
@@ -158,20 +138,6 @@
           {
             "value": 2,
             "label": "FRONTON 02"
-          }
-        ]
-      },
-      {
-        "value": 2,
-        "label": "FUTBOL 11",
-        "courts": [
-          {
-            "value": 1,
-            "label": "CAMPO FUTBOL 11 A"
-          },
-          {
-            "value": 1,
-            "label": "CAMPO FUTBOL 7"
           }
         ]
       },
