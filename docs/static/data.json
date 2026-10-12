@@ -380,16 +380,6 @@
     "label": "TXURDINAGA",
     "sports": [
       {
-        "value": 7,
-        "label": "CAMPO DE FUTBOL 5 HIERBA ARTIFICIAL",
-        "courts": [
-          {
-            "value": 1,
-            "label": "CAMPO FUTBOL 5 HIERBA ARTIFIC."
-          }
-        ]
-      },
-      {
         "value": 3,
         "label": "FRONTON",
         "courts": [
@@ -518,6 +508,16 @@
           {
             "value": 2,
             "label": "PADEL CUBIERTO 02"
+          }
+        ]
+      },
+      {
+        "value": 10,
+        "label": "TENIS DESCUBIERTO",
+        "courts": [
+          {
+            "value": 1,
+            "label": "TENIS DESCUBIERTO QUICK 01"
           }
         ]
       }
