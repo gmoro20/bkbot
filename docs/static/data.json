@@ -484,16 +484,6 @@
     "label": "ZORROZA",
     "sports": [
       {
-        "value": 2,
-        "label": "FUTBOL 11",
-        "courts": [
-          {
-            "value": 1,
-            "label": "CAMPO FUTBOL 11 A"
-          }
-        ]
-      },
-      {
         "value": 11,
         "label": "FUTBOL 7",
         "courts": [
@@ -528,16 +518,6 @@
           {
             "value": 2,
             "label": "PADEL CUBIERTO 02"
-          }
-        ]
-      },
-      {
-        "value": 10,
-        "label": "TENIS DESCUBIERTO",
-        "courts": [
-          {
-            "value": 1,
-            "label": "TENIS DESCUBIERTO QUICK 01"
           }
         ]
       }
